@@ -1,36 +1,63 @@
+<script src="../.eslintrc.js"></script>
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <div>
-      <p>
-        If Element is successfully added to this project, you'll see an
-        <code v-text="'<el-button>'"></code>
-        below
-      </p>
-      <el-button>el-button</el-button>
+    <div id="app">
+        <el-container>
+            <el-header>
+                <el-menu class="menu" mode="horizontal"
+                         router>
+                    <el-menu-item index="/">首页</el-menu-item>
+                    <el-menu-item index="/quotation">当天行情</el-menu-item>
+                    <el-menu-item index="/reflection">复盘日记</el-menu-item>
+                    <el-menu-item index="/">当前持仓</el-menu-item>
+                </el-menu>
+            </el-header>
+            <el-main>
+                <router-view></router-view>
+            </el-main>
+            <el-footer>
+                <el-divider><I class="el-icon-data-analysis"></I></el-divider>
+            </el-footer>
+        </el-container>
     </div>
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
-export default {
-  name: 'app',
-  components: {
-    HelloWorld
-  }
-}
+    export default {
+        name: 'app',
+        created: function () {
+
+        }
+    }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
+    html, body, #app {
+        height: 100%;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    #app {
+        font-family: "PingFang SC";
+    }
+
+    .el-header, .el-footer {
+        line-height: 60px;
+    }
+
+    body > .el-container {
+        margin-bottom: 40px;
+    }
+
+    .el-main {
+        height: 100%;
+    }
+
+
 </style>
+
