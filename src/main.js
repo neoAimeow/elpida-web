@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import App from './App.vue';
+import moment from 'moment'
 
 import {
     Pagination,
@@ -151,11 +152,15 @@ import router from './router'
 import axios from 'axios'
 
 let request = axios.create({
-    baseURL: 'http://localhost:8080/stock/',
+    baseURL: 'https://elpida-api.aimeow.com/stock/',
     timeout: 8080
 });
 
-Vue.prototype.$ajax = request
+Vue.prototype.$ajax = request;
+
+Vue.filter('dateFormat', function (dataStr, pattern = 'YYYY-MM-DD HH:mm:ss') {
+    return moment(dataStr).utcOffset(480).format(pattern)
+})
 
 new Vue({
     el: '#app',

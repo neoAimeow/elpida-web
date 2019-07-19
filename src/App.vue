@@ -6,6 +6,7 @@
                 <el-menu class="menu" mode="horizontal"
                          router>
                     <el-menu-item index="/">首页</el-menu-item>
+                    <el-menu-item index="/news">新闻</el-menu-item>
                     <el-menu-item index="/quotation">当天行情</el-menu-item>
                     <el-menu-item index="/reflection">复盘日记</el-menu-item>
                     <el-menu-item index="/">当前持仓</el-menu-item>

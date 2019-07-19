@@ -13,15 +13,15 @@
         },
         methods: {
             request() {
-                this.$ajax.get('/analyzeStockDataWithTradeData', {
-                    params: {
-                        tradeDate: '20190617'
-                    }
-                }).then(function (response) {
-                    console.log(response);
-                }).catch(function (response) {
-                    console.log(response);
-                });
+                // this.$ajax.get('/analyzeStockDataWithTradeData', {
+                //     params: {
+                //         tradeDate: '20190617'
+                //     }
+                // }).then(function (response) {
+                //     console.log(response);
+                // }).catch(function (response) {
+                //     console.log(response);
+                // });
             }
         }
     }
