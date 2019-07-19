@@ -8,8 +8,7 @@
                     <el-menu-item index="/">首页</el-menu-item>
                     <el-menu-item index="/news">新闻</el-menu-item>
                     <el-menu-item index="/quotation">当天行情</el-menu-item>
-                    <el-menu-item index="/reflection">复盘日记</el-menu-item>
-                    <el-menu-item index="/">当前持仓</el-menu-item>
+<!--                    <el-menu-item index="/reflection">复盘日记</el-menu-item>-->
                 </el-menu>
             </el-header>
             <el-main>
@@ -43,8 +42,8 @@
         padding: 0;
     }
 
-    #app {
-        font-family: "PingFang SC";
+    * {
+        font-family: "TW-Sung-98_1","PingFang SC";
     }
 
     .el-header, .el-footer {

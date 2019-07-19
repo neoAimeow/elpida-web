@@ -1,19 +1,19 @@
 <template>
     <div class="news-container">
-        <div class="news-date">
-            <span style="font-family: HYZhengYuan-CEW; font-size: 40px;">新闻</span>
+        <div id="news-title" :class="barFixed == true ? 'isFixed' :''">
+            <span style="font-size: 40px;">新闻</span>
             <el-divider direction="vertical"></el-divider>
-            <span style="font-family: HYZhengYuan-CEW">2019-08-27</span>
+            <span style="font-family: HYZhengYuan-CEW">{{date| dateFormat("YYYY-MM-DD")}}</span>
+            <el-divider></el-divider>
         </div>
-        <el-divider></el-divider>
 
-        <div class="news">
+        <div class="news" v-loading="loading">
             <div class="news-icon el-icon-back"></div>
 
             <div id="news-content">
                 <div v-for="(newsCase , key) in news" :key="key">
                     <!--                <span style="font-family: iekiexingkongzhiyi">{{newsCase.content == '' ? newsCase.title: newsCase.content}}</span>-->
-                    <span style="font-family: iekiexingkongzhiyi">{{newsCase.content == '' ? newsCase.title: newsCase.content}}</span>
+                    <span>{{newsCase.content == '' ? newsCase.title: newsCase.content}}</span>
 
                     <el-divider content-position="right">
                         <div>
@@ -37,26 +37,33 @@
         name: 'news',
         data() {
             return {
-                news: []
+                news: [],
+                loading: true,
+                date: '',
+                barFixed: false
             }
         },
         created: function () {
-            this.request();
+            this.date = this.$route.query.date;
+            this.request(this.date);
         },
-        methods: {
-            request() {
-                var that = this;
 
+        methods: {
+            request(date) {
+                var that = this;
                 this.$ajax.get('/getNews', {
                     params: {
-                        tradeDate: '20190617'
+                        tradeDate: date
                     }
                 }).then(function (response) {
                     that.news = response.data.model;
+                    that.loading = false;
                 }).catch(function (response) {
                     console.log(response);
+                    that.loading = false;
                 });
             }
+
         }
     }
 </script>
@@ -68,6 +75,11 @@
         justify-content: center;
         /*align-items: center;*/
     }
+    #news-title {
+        background-color: white;
+        height: 90px;
+        width: 100%;
+    }
     .news-icon {
         width: 5%;
         font-size: 30px;
@@ -75,5 +87,7 @@
     #news-content {
         /*background-color: red;*/
         width: 90%;
+        min-height: 500px;
     }
+
 </style>
