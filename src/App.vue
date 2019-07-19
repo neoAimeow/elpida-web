@@ -5,8 +5,9 @@
             <el-header>
                 <el-menu class="menu" mode="horizontal"
                          router>
+<!--                    :to="{path:'/homepage/classicCaseInside2',query: {id: item.id}}"-->
                     <el-menu-item index="/">首页</el-menu-item>
-                    <el-menu-item index="/news">新闻</el-menu-item>
+                    <el-menu-item :index="menuStr">新闻</el-menu-item>
                     <el-menu-item index="/quotation">当天行情</el-menu-item>
 <!--                    <el-menu-item index="/reflection">复盘日记</el-menu-item>-->
                 </el-menu>
@@ -22,11 +23,17 @@
 </template>
 
 <script>
-
     export default {
         name: 'app',
+        data() {
+            return {
+                menuStr: 'news'
+            }
+        },
         created: function () {
-
+            let date = this.$moment().utc().format('YYYYMMDD');
+            this.menuStr = 'news?date=' + date;
+            console.log(this.menuStr);
         }
     }
 </script>

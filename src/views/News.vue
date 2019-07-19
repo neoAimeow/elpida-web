@@ -3,7 +3,7 @@
         <div id="news-title" :class="barFixed == true ? 'isFixed' :''">
             <span style="font-size: 40px;">新闻</span>
             <el-divider direction="vertical"></el-divider>
-            <span style="font-family: HYZhengYuan-CEW">{{date| dateFormat("YYYY-MM-DD")}}</span>
+            <span style="font-family: HYZhengYuan-CEW">{{date}}</span>
             <el-divider></el-divider>
         </div>
 
@@ -40,12 +40,14 @@
                 news: [],
                 loading: true,
                 date: '',
-                barFixed: false
+                barFixed: false,
+                // //1为
+                // type: 1
             }
         },
         created: function () {
-            this.date = this.$route.query.date;
-            this.request(this.date);
+            this.date = this.$moment(this.$route.query.date, "YYYYMMDD").format("YYYY-MM-DD");
+            this.request(this.$route.query.date);
         },
 
         methods: {

@@ -159,8 +159,10 @@ let request = axios.create({
 Vue.prototype.$ajax = request;
 
 Vue.filter('dateFormat', function (dataStr, pattern = 'YYYY-MM-DD HH:mm:ss') {
-    return moment(dataStr).utcOffset(480).format(pattern)
+    return moment(dataStr).utc().format(pattern)
 })
+
+Vue.prototype.$moment = moment;
 
 new Vue({
     el: '#app',
