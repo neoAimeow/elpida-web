@@ -32,7 +32,7 @@
             }
         },
         created: function () {
-            let date = this.$moment().utc().format('YYYYMMDD');
+            let date = this.$moment().format('YYYYMMDD');
             this.menuStr = 'news?date=' + date;
             this.quotationStr = 'quotation?date=' + date;
         }
