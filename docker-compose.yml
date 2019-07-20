@@ -1,0 +1,21 @@
+version: '2'
+
+services:
+  web:
+    image: nginx
+    container_name: elpida-web
+    restart: always
+    volumes:
+      - /root/service/elpida-web:/usr/share/nginx/html:ro
+    expose:
+      - "443"
+    environment:
+      VIRTUAL_HOST: elpida.aimeow.com,elpida.aimeow-service.com
+      VIRTUAL_PORT: 80
+      LETSENCRYPT_HOST: elpida.aimeow.com,elpida.aimeow-service.com
+      LETSENCRYPT_EMAIL: a18814888787@gmail.com
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
