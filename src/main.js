@@ -1,14 +1,12 @@
 import Vue from 'vue';
 import App from './App.vue';
 import moment from 'moment'
+import './plugins/element.js'
 
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
 
 import router from './router'
 import axios from 'axios'
 
-Vue.use(ElementUI);
 
 let request = axios.create({
     baseURL: 'https://elpida-api.aimeow.com/stock/',
