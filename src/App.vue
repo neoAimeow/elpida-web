@@ -8,7 +8,7 @@
 <!--                    :to="{path:'/homepage/classicCaseInside2',query: {id: item.id}}"-->
                     <el-menu-item index="/">首页</el-menu-item>
                     <el-menu-item :index="menuStr">新闻</el-menu-item>
-                    <el-menu-item index="/quotation">当天行情</el-menu-item>
+                    <el-menu-item :index="quotationStr">当天行情</el-menu-item>
 <!--                    <el-menu-item index="/reflection">复盘日记</el-menu-item>-->
                 </el-menu>
             </el-header>
@@ -27,13 +27,14 @@
         name: 'app',
         data() {
             return {
-                menuStr: 'news'
+                menuStr: 'news',
+                quotationStr: 'quotation'
             }
         },
         created: function () {
             let date = this.$moment().utc().format('YYYYMMDD');
             this.menuStr = 'news?date=' + date;
-            console.log(this.menuStr);
+            this.quotationStr = 'quotation?date=' + date;
         }
     }
 </script>

@@ -1,7 +1,7 @@
 <template>
     <div class="news-container">
 
-        <div id="news-title" :class="barFixed == true ? 'isFixed' :''">
+        <div id="news-title">
             <div class="news-title-inner">
                 <div class="news-title-left">
                     <span style="font-size: 40px;">新闻</span>
@@ -57,7 +57,6 @@
                 news: [],
                 loading: true,
                 date: '',
-                barFixed: false,
                 // 0为同一天，1表示将来，-1表示过去
                 dayType: 0,
                 yesterdayDateStr: '',
