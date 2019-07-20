@@ -103,8 +103,7 @@
                 }).then(function (response) {
                     that.news = response.data.model;
                     that.loading = false;
-                }).catch(function (response) {
-                    console.log(response);
+                }).catch(function () {
                     that.loading = false;
                 });
             },
