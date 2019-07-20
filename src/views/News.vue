@@ -5,13 +5,17 @@
             <el-divider direction="vertical"></el-divider>
             <span style="font-family: HYZhengYuan-CEW">{{date}}</span>
             <el-divider></el-divider>
-        </div>
+    </div>
 
         <div class="news" v-loading="loading">
-            <div class="news-icon el-icon-back"></div>
+            <div class="news-icon">
+                <i @click="goYesterday" class="el-icon-back"></i>
+
+            </div>
 
             <div id="news-content">
-                <div v-for="(newsCase , key) in news" :key="key">
+                <div v-if="dayType === 1" style="text-align: center;margin-top: 220px;">当天没有新闻</div>
+                <div v-else v-for="(newsCase , key) in news" :key="key">
                     <!--                <span style="font-family: iekiexingkongzhiyi">{{newsCase.content == '' ? newsCase.title: newsCase.content}}</span>-->
                     <span>{{newsCase.content == '' ? newsCase.title: newsCase.content}}</span>
 
@@ -26,7 +30,9 @@
                     </el-divider>
                 </div>
             </div>
-            <div style="text-align: right;" class="news-icon el-icon-right"></div>
+            <div style="text-align: right;" class="news-icon">
+                <i @click="goTomorrow" v-if="dayType === -1" class="el-icon-right"></i>
+            </div>
 
         </div>
     </div>
@@ -41,16 +47,41 @@
                 loading: true,
                 date: '',
                 barFixed: false,
-                // //1为
-                // type: 1
+                // 0为同一天，1表示将来，-1表示过去
+                dayType: 0,
+                yesterdayDateStr: '',
+                tomorrowDateStr: ''
             }
         },
         created: function () {
-            this.date = this.$moment(this.$route.query.date, "YYYYMMDD").format("YYYY-MM-DD");
-            this.request(this.$route.query.date);
+            this.loadData();
         },
-
+        watch: {
+            "$route": "loadData"
+        },
         methods: {
+            loadData() {
+                this.handleDate(this.$route.query.date);
+            },
+            handleDate(date) {
+                this.news = [];
+                this.loading = true;
+                this.date = this.$moment(date, "YYYYMMDD").format("YYYY-MM-DD");
+                let nowTime = this.$moment(new Date()).format("YYYY-MM-DD");
+                if (this.$moment(nowTime, "YYYY-MM-DD").isSame(this.date)) {
+                    this.dayType = 0;
+                } else if (this.$moment(nowTime, "YYYY-MM-DD").isBefore(this.date)) {
+                    this.dayType = 1;
+                } else {
+                    this.dayType = -1
+                }
+
+                this.tomorrowDateStr = this.$moment(this.date).add(1, 'days').format("YYYYMMDD");
+                this.yesterdayDateStr = this.$moment(this.date).subtract(1, 'days').format("YYYYMMDD");
+
+                this.request(date);
+            },
+
             request(date) {
                 var that = this;
                 this.$ajax.get('/getNews', {
@@ -64,6 +95,12 @@
                     console.log(response);
                     that.loading = false;
                 });
+            },
+            goYesterday() {
+                this.$router.push({query: {date: this.yesterdayDateStr}});
+            },
+            goTomorrow() {
+                this.$router.push({query: {date: this.tomorrowDateStr}});
             }
 
         }
