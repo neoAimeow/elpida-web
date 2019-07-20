@@ -24,9 +24,47 @@
                 </div>
 
                 <div id="quotation-content">
-                    <div v-if="dayType === 1" style="text-align: center;margin-top: 220px;">当天没有行情</div>
-                    <div v-else>
+                    <div v-if="dayType === 1 || isEmpty" style="text-align: center;margin-top: 220px;">当天没有行情</div>
+                    <div v-else class="quotation-content-main">
+                        <el-row gutter="20">
+                            <el-col :span="12">
+                                <StockTable title="涨停票" :tableData="stockData.limitUpStocks"></StockTable>
+                            </el-col>
+                            <el-col :span="12">
+                                <StockTable title="一字板" :tableData="stockData.topStocks"></StockTable>
+                            </el-col>
 
+                        </el-row>
+
+                        <el-row gutter="20" style="margin-top: 30px;">
+                            <el-col :span="12">
+                                <StockTable title="跌停票" :tableData="stockData.limitDownStocks"></StockTable>
+                            </el-col>
+                            <el-col :span="12">
+                                <StockTable title="炸板票" :tableData="stockData.explodeStocks"></StockTable>
+                            </el-col>
+                        </el-row>
+
+                        <el-row gutter="20" style="margin-top: 30px;">
+                            <el-col :span="6">
+                                <SimpleStockTable title="跌停票" :tableData="stockData.limitDownStocks"></SimpleStockTable>
+                            </el-col>
+                            <el-col :span="6">
+                                <SimpleStockTable title="炸板票" :tableData="stockData.explodeStocks"></SimpleStockTable>
+                            </el-col>
+                            <el-col :span="6">
+                                <SimpleStockTable title="跌停票" :tableData="stockData.limitDownStocks"></SimpleStockTable>
+                            </el-col>
+                            <el-col :span="6">
+                                <SimpleStockTable title="炸板票" :tableData="stockData.explodeStocks"></SimpleStockTable>
+                            </el-col>
+                        </el-row>
+
+
+                        <!--                        <StockTable title="跌停票" :tableData="stockData.limitDownStocks"></StockTable>-->
+<!--                        <StockTable title="炸板票" :tableData="stockData.explodeStocks"></StockTable>-->
+<!--                        <div>-->
+<!--                        </div>-->
                     </div>
                 </div>
                 <div style="text-align: right;" class="quotation-icon">
@@ -39,6 +77,9 @@
 </template>
 
 <script>
+    import StockTable from '@/components/StockTable.vue'
+    import SimpleStockTable from '@/components/SimpleStockTable.vue'
+
     export default {
         name: 'quotation',
         data() {
@@ -50,11 +91,16 @@
                 dayType: 0,
                 yesterdayDateStr: '',
                 tomorrowDateStr: '',
-                dialogVisible: false
+                dialogVisible: false,
+                isEmpty: false
             }
         },
         created: function () {
             this.loadData();
+        },
+        components: {
+            StockTable,
+            SimpleStockTable
         },
         watch: {
             "$route": "loadData"
@@ -63,8 +109,10 @@
             loadData() {
                 this.handleDate(this.$route.query.date);
             },
+
             handleDate(date) {
                 this.stockData = {};
+                this.isEmpty = false;
                 this.loading = true;
                 this.date = this.$moment(date, "YYYYMMDD").format("YYYY-MM-DD");
                 let nowTime = this.$moment(new Date()).format("YYYY-MM-DD");
@@ -89,10 +137,17 @@
                         tradeDate: date
                     }
                 }).then(function (response) {
-                    that.news = response.data.model;
+                    console.log(response)
                     that.loading = false;
+                    if (response.data.success == true) {
+                        that.stockData = response.data.model;
+                    } else {
+                        that.isEmpty = true;
+                    }
+
                 }).catch(function () {
                     that.loading = false;
+                    that.isEmpty = true;
                 });
             },
             goYesterday() {
@@ -144,6 +199,13 @@
         /*background-color: red;*/
         width: 90%;
         min-height: 500px;
+    }
+
+    .quotation-content-main {
+        /*display: flex;*/
+        /*flex-direction: row;*/
+        /*justify-content: center	;*/
+        /*align-items: center;*/
     }
 
 </style>

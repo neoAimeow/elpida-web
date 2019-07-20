@@ -7,6 +7,7 @@ import './plugins/element.js'
 import router from './router'
 import axios from 'axios'
 
+import 'element-ui/lib/theme-chalk/index.css';
 
 let request = axios.create({
     baseURL: 'https://elpida-api.aimeow.com/stock/',

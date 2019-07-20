@@ -1,5 +1,5 @@
 <template>
-    <div class="stockTable">
+    <div class="simpleStockTable">
         <el-card class="box-card">
             <div slot="header" class="clearfix">
                 <span>{{title}}</span>
@@ -19,16 +19,6 @@
                 <el-table-column
                         prop="stockCode"
                         label="股票代码"
-                >
-                </el-table-column>
-                <el-table-column
-                        prop="closePrice"
-                        label="收盘价"
-                >
-                </el-table-column>
-                <el-table-column
-                        prop="changeRate"
-                        label="涨跌幅"
                 >
                 </el-table-column>
             </el-table>
@@ -64,6 +54,6 @@
     }
 
     .box-card {
-        min-width: 480px;
+        min-width: 220px;
     }
 </style>

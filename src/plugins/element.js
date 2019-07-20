@@ -1,6 +1,7 @@
 import Vue from 'vue'
-import { Button, Menu, MenuItemGroup, MenuItem, Divider, Loading, Dialog, DatePicker, Icon, Container, Header, Main, Footer } from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css';
+import { Button, Menu, MenuItemGroup, MenuItem, Divider,
+    Loading, Dialog, DatePicker, Icon, Container, Header,
+    Main, Footer, Table, TableColumn, Card, Row, Col } from 'element-ui'
 
 Vue.use(Button);
 Vue.use(Menu);
@@ -15,3 +16,8 @@ Vue.use(Container);
 Vue.use(Header);
 Vue.use(Main);
 Vue.use(Footer);
+Vue.use(Table);
+Vue.use(TableColumn);
+Vue.use(Card);
+Vue.use(Row);
+Vue.use(Col);
