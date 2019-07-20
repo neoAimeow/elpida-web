@@ -10,7 +10,7 @@ import axios from 'axios'
 
 let request = axios.create({
     baseURL: 'https://elpida-api.aimeow.com/stock/',
-    timeout: 8080
+    timeout: 99999
 });
 
 Vue.prototype.$ajax = request;
