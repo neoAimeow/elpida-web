@@ -26,7 +26,7 @@
                 <div id="quotation-content">
                     <div v-if="dayType === 1 || isEmpty" style="text-align: center;margin-top: 220px;">当天没有行情</div>
                     <div v-else class="quotation-content-main">
-                        <el-row gutter="20">
+                        <el-row :gutter="gutter">
                             <el-col :span="12">
                                 <StockTable title="涨停票" :tableData="stockData.limitUpStocks"></StockTable>
                             </el-col>
@@ -36,7 +36,7 @@
 
                         </el-row>
 
-                        <el-row gutter="20" style="margin-top: 30px;">
+                        <el-row :gutter="gutter" style="margin-top: 30px;">
                             <el-col :span="12">
                                 <StockTable title="跌停票" :tableData="stockData.limitDownStocks"></StockTable>
                             </el-col>
@@ -45,7 +45,7 @@
                             </el-col>
                         </el-row>
 
-                        <el-row gutter="20" style="margin-top: 30px;">
+                        <el-row :gutter="gutter" style="margin-top: 30px;">
                             <el-col :span="6">
                                 <SimpleStockTable title="跌停票" :tableData="stockData.limitDownStocks"></SimpleStockTable>
                             </el-col>
@@ -92,7 +92,8 @@
                 yesterdayDateStr: '',
                 tomorrowDateStr: '',
                 dialogVisible: false,
-                isEmpty: false
+                isEmpty: false,
+                gutter: 20
             }
         },
         created: function () {

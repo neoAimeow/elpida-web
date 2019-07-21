@@ -4,7 +4,7 @@
             <div slot="header" class="clearfix">
                 <span>{{title}}</span>
                 <el-divider direction="vertical"></el-divider>
-                <span style="font-family: HYZhengYuan-CEW;font-size: 13px;">{{tableData.length}}个</span>
+                <span style="font-family: HYZhengYuan-CEW;font-size: 13px;">{{length}}个</span>
             </div>
 
             <el-table
@@ -42,6 +42,16 @@
         props: {
             tableData: Array,
             title: String
+        },
+        data() {
+            return {
+                length: 0
+            }
+        },
+        watch: {
+            tableData() {
+                this.length = this.tableData.length;
+            }
         }
     }
 </script>
