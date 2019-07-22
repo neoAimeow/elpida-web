@@ -42,36 +42,36 @@
                     <div v-if="dayType === 1 || isEmpty" style="text-align: center;margin-top: 220px;">当天没有行情</div>
                     <div v-else class="quotation-content-main">
                         <el-row :gutter="gutter">
-                            <el-col :span="12">
-                                <StockTable title="涨停票" :tableData="stockData.limitUpStocks"></StockTable>
+                            <el-col :lg="12" :xl="12" :xs="24" :sm="24" :md="24">
+                                <StockTable title="涨停票" :tableData="stockData.limitUpStocks == null ? [] : stockData.limitUpStocks"></StockTable>
                             </el-col>
-                            <el-col :span="12">
-                                <StockTable title="一字板" :tableData="stockData.topStocks"></StockTable>
+                            <el-col :lg="12" :xl="12" :xs="24" :sm="24" :md="24">
+                                <StockTable title="一字板" :tableData="stockData.topStocks == null ? [] : stockData.topStocks"></StockTable>
                             </el-col>
 
                         </el-row>
 
                         <el-row :gutter="gutter" style="margin-top: 30px;">
-                            <el-col :span="12">
-                                <StockTable title="跌停票" :tableData="stockData.limitDownStocks"></StockTable>
+                            <el-col :lg="12" :xl="12" :xs="24" :sm="24" :md="24">
+                                <StockTable title="跌停票" :tableData="stockData.limitDownStocks == null ? [] : stockData.limitDownStocks"></StockTable>
                             </el-col>
-                            <el-col :span="12">
-                                <StockTable title="炸板票" :tableData="stockData.explodeStocks"></StockTable>
+                            <el-col :lg="12" :xl="12" :xs="24" :sm="24" :md="24">
+                                <StockTable title="炸板票" :tableData="stockData.explodeStocks == null ? [] : stockData.explodeStocks"></StockTable>
                             </el-col>
                         </el-row>
 
                         <el-row :gutter="gutter" style="margin-top: 30px;">
-                            <el-col :span="6">
-                                <SimpleStockTable title="跌停票" :tableData="stockData.limitDownStocks"></SimpleStockTable>
+                            <el-col :lg="6" :xl="6" :xs="12" :sm="12" :md="12">
+                                <SimpleStockTable title="跌停票" :tableData="stockData.explodeStocks == null ? [] : stockData.explodeStocks"></SimpleStockTable>
                             </el-col>
-                            <el-col :span="6">
-                                <SimpleStockTable title="炸板票" :tableData="stockData.explodeStocks"></SimpleStockTable>
+                            <el-col :lg="6" :xl="6" :xs="12" :sm="12" :md="12">
+                                <SimpleStockTable title="炸板票" :tableData="stockData.explodeStocks == null ? [] : stockData.explodeStocks"></SimpleStockTable>
                             </el-col>
-                            <el-col :span="6">
-                                <SimpleStockTable title="跌停票" :tableData="stockData.limitDownStocks"></SimpleStockTable>
+                            <el-col :lg="6" :xl="6" :xs="12" :sm="12" :md="12">
+                                <SimpleStockTable title="跌停票" :tableData="stockData.explodeStocks == null ? [] : stockData.explodeStocks"></SimpleStockTable>
                             </el-col>
-                            <el-col :span="6">
-                                <SimpleStockTable title="炸板票" :tableData="stockData.explodeStocks"></SimpleStockTable>
+                            <el-col :lg="6" :xl="6" :xs="12" :sm="12" :md="12">
+                                <SimpleStockTable title="炸板票" :tableData="stockData.explodeStocks == null ? [] : stockData.explodeStocks"></SimpleStockTable>
                             </el-col>
                         </el-row>
 
