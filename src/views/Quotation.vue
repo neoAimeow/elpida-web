@@ -10,7 +10,15 @@
                 </div>
 
                 <div class="quotation-title-right">
-                    <el-date-picker @change="dateChange" v-model="date" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-row :gutter="gutter">
+                        <el-col :span="8">
+                            <el-button @click="reloadButtonClicked">重新分析</el-button>
+                        </el-col>
+                        <el-col :span="8">
+                            <el-date-picker @change="dateChange" v-model="date" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"></el-date-picker>
+                        </el-col>
+                    </el-row>
+
                 </div>
             </div>
 
@@ -107,11 +115,14 @@
             "$route": "loadData"
         },
         methods: {
+            reloadButtonClicked() {
+                this.handleDate('analysis', this.$route.query.date);
+            },
             loadData() {
-                this.handleDate(this.$route.query.date);
+                this.handleDate('get', this.$route.query.date);
             },
 
-            handleDate(date) {
+            handleDate(type, date) {
                 this.stockData = {};
                 this.isEmpty = false;
                 this.loading = true;
@@ -128,12 +139,16 @@
                 this.tomorrowDateStr = this.$moment(this.date).add(1, 'days').format("YYYYMMDD");
                 this.yesterdayDateStr = this.$moment(this.date).subtract(1, 'days').format("YYYYMMDD");
 
-                this.request(date);
+                if (type === 'get') {
+                    this.request(date);
+                } else {
+                    this.request(date, '/analyzeStockDataWithTradeData');
+                }
             },
 
-            request(date) {
-                var that = this;
-                this.$ajax.get('/getAnalysisResult', {
+            request(date, uri = '/getAnalysisResult') {
+                let that = this;
+                this.$ajax.get(uri, {
                     params: {
                         tradeDate: date
                     }
@@ -151,12 +166,15 @@
                     that.isEmpty = true;
                 });
             },
+
             goYesterday() {
                 this.$router.push({query: {date: this.yesterdayDateStr}});
             },
+
             goTomorrow() {
                 this.$router.push({query: {date: this.tomorrowDateStr}});
             },
+
             dateChange() {
                 let dateStr = this.$moment(this.date, 'YYYY-MM-DD').format('YYYYMMDD');
                 this.$router.push({query: {date: dateStr}});
