@@ -9,7 +9,7 @@
                 <div>
                     <i class="el-icon-potato-strips"></i>
                     <el-divider direction="vertical"></el-divider>
-                    <span style="font-family: HYZhengYuan-CEW">{{newsCase.src}}</span>
+                    <span style="font-family: HYZhengYuan-CEW">{{newsCase.srcStr}}</span>
                     <el-divider direction="vertical"></el-divider>
                     <span style="font-family: HYZhengYuan-CEW">{{newsCase.dateTime| dateFormat("YYYY-MM-DD HH:mm:ss")}}</span>
                 </div>
