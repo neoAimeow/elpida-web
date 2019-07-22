@@ -18,28 +18,11 @@
     </div>
 
         <div id="news-body">
-            <div class="news" v-loading="loading">
+            <div class="news">
                 <div class="news-icon">
                     <i @click="goYesterday" class="el-icon-back"></i>
                 </div>
-
-                <div id="news-content">
-                    <div v-if="dayType === 1" style="text-align: center;margin-top: 220px;">当天没有新闻</div>
-                    <div v-else v-for="(newsCase , key) in news" :key="key">
-                        <!--                <span style="font-family: iekiexingkongzhiyi">{{newsCase.content == '' ? newsCase.title: newsCase.content}}</span>-->
-                        <span>{{newsCase.content == '' ? newsCase.title: newsCase.content}}</span>
-
-                        <el-divider content-position="right">
-                            <div>
-                                <i class="el-icon-potato-strips"></i>
-                                <el-divider direction="vertical"></el-divider>
-                                <span style="font-family: HYZhengYuan-CEW">{{newsCase.src}}</span>
-                                <el-divider direction="vertical"></el-divider>
-                                <span style="font-family: HYZhengYuan-CEW">{{newsCase.dateTime| dateFormat("YYYY-MM-DD HH:mm:ss")}}</span>
-                            </div>
-                        </el-divider>
-                    </div>
-                </div>
+                <NewsComponent id="news-content" :news="news" :dayType="dayType" v-loading="loading"></NewsComponent>
                 <div style="text-align: right;" class="news-icon">
                     <i @click="goTomorrow" v-if="dayType === -1" class="el-icon-right"></i>
                 </div>
@@ -50,6 +33,8 @@
 </template>
 
 <script>
+    import NewsComponent from '@/components/NewsComponent.vue'
+
     export default {
         name: 'news',
         data() {
@@ -66,6 +51,9 @@
         },
         created: function () {
             this.loadData();
+        },
+        components: {
+            NewsComponent
         },
         watch: {
             "$route": "loadData"
@@ -152,7 +140,6 @@
     #news-content {
         /*background-color: red;*/
         width: 90%;
-        min-height: 500px;
     }
 
 </style>

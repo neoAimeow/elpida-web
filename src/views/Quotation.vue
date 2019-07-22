@@ -1,6 +1,10 @@
 <template>
     <div class="quotation-container">
 
+        <el-dialog width="70%" title="当日新闻" :visible.sync="newsVisible">
+            <NewsComponent :news="news"  v-loading="newsLoading" ></NewsComponent>
+        </el-dialog>
+
         <div id="quotation-title">
             <div class="quotation-title-inner">
                 <div class="quotation-title-left">
@@ -11,10 +15,13 @@
 
                 <div class="quotation-title-right">
                     <el-row :gutter="gutter">
-                        <el-col :span="8">
-                            <el-button @click="reloadButtonClicked">重新分析</el-button>
+                        <el-col :span="6">
+                            <el-button icon="el-icon-news" @click="newsButtonClicked">当日新闻</el-button>
                         </el-col>
-                        <el-col :span="8">
+                        <el-col :span="6">
+                            <el-button icon="el-icon-help" @click="reloadButtonClicked">重新分析</el-button>
+                        </el-col>
+                        <el-col :span="6">
                             <el-date-picker @change="dateChange" v-model="date" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"></el-date-picker>
                         </el-col>
                     </el-row>
@@ -87,6 +94,7 @@
 <script>
     import StockTable from '@/components/StockTable.vue'
     import SimpleStockTable from '@/components/SimpleStockTable.vue'
+    import NewsComponent from '@/components/NewsComponent.vue'
 
     export default {
         name: 'quotation',
@@ -101,7 +109,10 @@
                 tomorrowDateStr: '',
                 dialogVisible: false,
                 isEmpty: false,
-                gutter: 20
+                gutter: 20,
+                newsVisible: false,
+                news: [],
+                newsLoading: true
             }
         },
         created: function () {
@@ -109,12 +120,19 @@
         },
         components: {
             StockTable,
-            SimpleStockTable
+            SimpleStockTable,
+            NewsComponent
         },
         watch: {
             "$route": "loadData"
         },
         methods: {
+            newsButtonClicked() {
+                this.news = [];
+                this.newsLoading = true;
+                this.requestNews(this.$route.query.date);
+                this.newsVisible = true;
+            },
             reloadButtonClicked() {
                 this.handleDate('analysis', this.$route.query.date);
             },
@@ -164,6 +182,20 @@
                 }).catch(function () {
                     that.loading = false;
                     that.isEmpty = true;
+                });
+            },
+
+            requestNews(date) {
+                var that = this;
+                this.$ajax.get('/getNews', {
+                    params: {
+                        tradeDate: date
+                    }
+                }).then(function (response) {
+                    that.news = response.data.model;
+                    that.newsLoading = false;
+                }).catch(function () {
+                    that.newsLoading = false;
                 });
             },
 
