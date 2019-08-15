@@ -171,7 +171,6 @@
                         tradeDate: date
                     }
                 }).then(function (response) {
-                    console.log(response)
                     that.loading = false;
                     if (response.data.success == true) {
                         that.stockData = response.data.model;

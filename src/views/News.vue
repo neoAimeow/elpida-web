@@ -10,7 +10,15 @@
                 </div>
 
                 <div class="news-title-right">
-                    <el-date-picker @change="dateChange" v-model="date" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"></el-date-picker>
+                    <el-row :gutter="gutter">
+                        <el-col :span="8">
+                            <el-button icon="el-icon-help" @click="collectNews">采集新闻</el-button>
+                        </el-col>
+                        <el-col :span="8">
+                            <el-date-picker @change="dateChange" v-model="date" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"></el-date-picker>
+                        </el-col>
+                    </el-row>
+
                 </div>
             </div>
 
@@ -46,6 +54,7 @@
                 dayType: 0,
                 yesterdayDateStr: '',
                 tomorrowDateStr: '',
+                gutter: 20,
                 dialogVisible: false
             }
         },
@@ -94,6 +103,21 @@
                     that.loading = false;
                 });
             },
+
+            collectRequest(date) {
+                var that = this;
+                this.$ajax.get('/collectNewsFromTuShare', {
+                    params: {
+                        tradeDate: date
+                    }
+                }).then(function (response) {
+                    that.news = response.data.model;
+                    that.loading = false;
+                }).catch(function () {
+                    that.loading = false;
+                });
+            },
+
             goYesterday() {
                 this.$router.push({query: {date: this.yesterdayDateStr}});
             },
@@ -103,6 +127,12 @@
             dateChange() {
                 let dateStr = this.$moment(this.date, 'YYYY-MM-DD').format('YYYYMMDD');
                 this.$router.push({query: {date: dateStr}});
+            },
+
+            collectNews() {
+                this.news = [];
+                this.loading = true;
+                this.collectRequest(this.$route.query.date);
             }
         }
     }
