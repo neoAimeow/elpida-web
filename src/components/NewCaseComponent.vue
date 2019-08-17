@@ -44,7 +44,6 @@
                     }
                 }).then(function (response) {
                     newsCase.isMark = response.data.model;
-                    console.log(response);
                 });
             },
 
@@ -56,8 +55,6 @@
                     }
                 }).then(function (response) {
                     newsCase.isMark = response.data.model;
-                    console.log(response);
-
                 });
             }
         },
