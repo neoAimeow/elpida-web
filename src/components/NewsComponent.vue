@@ -1,24 +1,13 @@
 <template>
     <div class="news-component">
         <div v-if="dayType === 1" style="text-align: center;margin-top: 220px;">当天没有新闻</div>
-        <div v-else v-for="(newsCase , key) in news" :key="key" @click="test(newsCase)">
-            <!--                <span style="font-family: iekiexingkongzhiyi">{{newsCase.content == '' ? newsCase.title: newsCase.content}}</span>-->
-            <span>{{newsCase.content == '' ? newsCase.title: newsCase.content}}</span>
-
-            <el-divider content-position="right">
-                <div>
-                    <i class="el-icon-potato-strips"></i>
-                    <el-divider direction="vertical"></el-divider>
-                    <span style="font-family: HYZhengYuan-CEW">{{newsCase.srcStr}}</span>
-                    <el-divider direction="vertical"></el-divider>
-                    <span style="font-family: HYZhengYuan-CEW">{{newsCase.dateTime| dateFormat("YYYY-MM-DD HH:mm:ss")}}</span>
-                </div>
-            </el-divider>
-        </div>
+        <NewCaseComponent v-else v-for="(newsCase , key) in news" :key="key" :newsCase="newsCase"></NewCaseComponent>
     </div>
 </template>
 
 <script>
+    import NewCaseComponent from '@/components/NewCaseComponent.vue';
+
     export default {
         name: 'news',
         props: {
@@ -30,21 +19,8 @@
                 length: 0
             }
         },
-        methods: {
-            test(newsCase) {
-                // let that = this;
-                this.$ajax.get('markNewsAsImportant', {
-                    params: {
-                        title: newsCase.title,
-                        content: newsCase.content,
-                        newsDate:  this.$moment(newsCase.dateTime).format("YYYY-MM-DD HH:mm:ss"),
-                        src: newsCase.src,
-                        srcStr: newsCase.srcStr
-                    }
-                }).then(function (response) {
-
-                });
-            }
+        components: {
+            NewCaseComponent
         },
         watch: {
             news() {
@@ -74,4 +50,11 @@
         min-height: 500px;
     }
 
+    .blackFont {
+        color:black;
+    }
+
+    .redFont {
+        color:red;
+    }
 </style>
