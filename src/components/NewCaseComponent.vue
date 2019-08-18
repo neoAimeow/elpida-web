@@ -1,6 +1,6 @@
 <template>
-    <div class="news-case-component">
-        <div @click="mark(newsCase)">
+    <div class="news-case-component" @click="mark(newsCase)">
+        <div>
             <!--                <span style="font-family: iekiexingkongzhiyi">{{newsCase.content == '' ? newsCase.title: newsCase.content}}</span>-->
             <span v-bind:class="{blackFont:newsCase.isMark, redFont:newsCase.isMark}">{{newsCase.content == '' ? newsCase.title: newsCase.content}}</span>
 
